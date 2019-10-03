@@ -1,0 +1,114 @@
+# depslib dependency file v1.0
+1553723874 source:c:\marcio\imageclass\programabasicoopengl.cpp
+	<iostream>
+	<cmath>
+	<ctime>
+	<windows.h>
+	"gl\glut.h"
+	<sys/time.h>
+	<GLUT/glut.h>
+
+1553772727 .h>
+
+1298986600 c:\marcio\imageclass\gl\glut.h
+	"freeglut.h"
+
+1298986600 h"
+
+1298986600 c:\marcio\imageclass\gl\freeglut.h
+	"freeglut_std.h"
+	"freeglut_ext.h"
+
+1298986600 ext.h"
+
+1298986600 c:\marcio\imageclass\gl\freeglut_std.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1298986600 
+
+1298986600 c:\marcio\imageclass\gl\freeglut_ext.h
+
+1553774880 source:/home/10033421/Desktop/Basico2D/ProgramaBasicoOpenGL.cpp
+	<iostream>
+	<cmath>
+	<ctime>
+	<windows.h>
+	"gl\glut.h"
+	<sys/time.h>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<iostream>
+	<cmath>
+	<ctime>
+	<windows.h>
+	<glut.h>
+	<sys/time.h>
+	<GLUT/glut.h>
+	<glut.h>
+
+1553731431 >
+
+1553772727 source:c:\users\10033421.portoalegre.006\desktop\basico2d\programabasicoopengl.cpp
+	<iostream>
+	<cmath>
+	<ctime>
+	<windows.h>
+	<glut.h>
+	<sys/time.h>
+	<GL/glut.h>
+	<GLUT/glut.h>
+
+1298986600 c:\users\10033421.portoalegre.006\desktop\basico2d\gl\glut.h
+	"freeglut.h"
+
+1298986600 c:\users\10033421.portoalegre.006\desktop\basico2d\gl\freeglut.h
+	"freeglut_std.h"
+	"freeglut_ext.h"
+
+1298986600 c:\users\10033421.portoalegre.006\desktop\basico2d\gl\freeglut_std.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1298986600 c:\users\10033421.portoalegre.006\desktop\basico2d\gl\freeglut_ext.h
+
+1298986600 /home/10033421/Desktop/Basico2D/GL/glut.h
+	"freeglut.h"
+
+1298986600 /home/10033421/Desktop/Basico2D/GL/freeglut.h
+	"freeglut_std.h"
+	"freeglut_ext.h"
+
+1298986600 /home/10033421/Desktop/Basico2D/GL/freeglut_std.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1298986600 /home/10033421/Desktop/Basico2D/GL/freeglut_ext.h
+
+1553774880 source:c:\users\10033421\desktop\basico2d\programabasicoopengl.cpp
+	<iostream>
+	<cmath>
+	<ctime>
+	<windows.h>
+	<glut.h>
+	<sys/time.h>
+	<GLUT/glut.h>
+	<glut.h>
+
+1298986600 c:\users\10033421\desktop\basico2d\gl\glut.h
+	"freeglut.h"
+
+1298986600 c:\users\10033421\desktop\basico2d\gl\freeglut.h
+	"freeglut_std.h"
+	"freeglut_ext.h"
+
+1298986600 c:\users\10033421\desktop\basico2d\gl\freeglut_std.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1298986600 c:\users\10033421\desktop\basico2d\gl\freeglut_ext.h
+

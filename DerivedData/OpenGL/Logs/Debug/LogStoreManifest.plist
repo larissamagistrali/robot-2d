@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>9</integer>
+	<key>logs</key>
+	<dict>
+		<key>57D82C83-DDF7-4559-B179-52C7B538A0B8</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>57D82C83-DDF7-4559-B179-52C7B538A0B8.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>S</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>OpenGL project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>OpenGLTest</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Debug OpenGLTest</string>
+			<key>timeStartedRecording</key>
+			<real>575465999.86841595</real>
+			<key>timeStoppedRecording</key>
+			<real>575466003.99905097</real>
+			<key>title</key>
+			<string>Debug OpenGLTest</string>
+			<key>uniqueIdentifier</key>
+			<string>57D82C83-DDF7-4559-B179-52C7B538A0B8</string>
+		</dict>
+		<key>5FA8A48F-5BEB-482E-92BB-1934D9263B05</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>5FA8A48F-5BEB-482E-92BB-1934D9263B05.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>S</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>OpenGL project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>OpenGLTest</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Debug OpenGLTest</string>
+			<key>timeStartedRecording</key>
+			<real>575417198.51845706</real>
+			<key>timeStoppedRecording</key>
+			<real>575417212.32135105</real>
+			<key>title</key>
+			<string>Debug OpenGLTest</string>
+			<key>uniqueIdentifier</key>
+			<string>5FA8A48F-5BEB-482E-92BB-1934D9263B05</string>
+		</dict>
+		<key>80557A7E-91D5-42CD-9AAF-CDD4D97CA7F7</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>80557A7E-91D5-42CD-9AAF-CDD4D97CA7F7.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>S</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>OpenGL project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>OpenGLTest</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Debug OpenGLTest</string>
+			<key>timeStartedRecording</key>
+			<real>575465871.16145504</real>
+			<key>timeStoppedRecording</key>
+			<real>575465879.71673203</real>
+			<key>title</key>
+			<string>Debug OpenGLTest</string>
+			<key>uniqueIdentifier</key>
+			<string>80557A7E-91D5-42CD-9AAF-CDD4D97CA7F7</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

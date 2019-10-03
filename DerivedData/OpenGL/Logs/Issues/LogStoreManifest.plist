@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>9</integer>
+	<key>logs</key>
+	<dict>
+		<key>1556CFC2-7D9B-41E8-BAFB-3E111FB84B43</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.tool</string>
+			<key>fileName</key>
+			<string>1556CFC2-7D9B-41E8-BAFB-3E111FB84B43.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>S</string>
+			<key>signature</key>
+			<string>OpenGLTest-cgnurunamdfblshajgmptrumuesm</string>
+			<key>timeStartedRecording</key>
+			<real>575417149.28300595</real>
+			<key>timeStoppedRecording</key>
+			<real>575417149.92580998</real>
+			<key>title</key>
+			<string>Build target OpenGLTest</string>
+			<key>uniqueIdentifier</key>
+			<string>1556CFC2-7D9B-41E8-BAFB-3E111FB84B43</string>
+		</dict>
+		<key>2CC3D6B0-C451-40FB-8AE1-A768BC89A786</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.tool</string>
+			<key>fileName</key>
+			<string>2CC3D6B0-C451-40FB-8AE1-A768BC89A786.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>S</string>
+			<key>signature</key>
+			<string>OpenGLTest-ekkyokshducssxahyifpldznjteh</string>
+			<key>timeStartedRecording</key>
+			<real>575465999.163028</real>
+			<key>timeStoppedRecording</key>
+			<real>575465999.86180305</real>
+			<key>title</key>
+			<string>Build target OpenGLTest</string>
+			<key>uniqueIdentifier</key>
+			<string>2CC3D6B0-C451-40FB-8AE1-A768BC89A786</string>
+		</dict>
+	</dict>
+	<key>preserveOldLogs</key>
+	<true/>
+</dict>
+</plist>
