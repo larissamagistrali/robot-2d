@@ -102,8 +102,8 @@ void animate()
 // **********************************************************************
 void init(void)
 {
-    // Define a cor do fundo da tela (AZUL)
-    glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+    // Define a cor do fundo da tela
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 }
 
@@ -140,7 +140,7 @@ void DesenhaBase()
 void DesenhaEixos()
 {
     glLineWidth(3);
-    glColor3f(1,1,1);
+    glColor3f(1,0,0);
     glBegin(GL_LINES);
         glVertex2d(0,25);
         glVertex2d(100,25);
@@ -209,7 +209,7 @@ void display( void )
     // Coloque aqui as chamadas das rotinas que desenha os objetos
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     DesenhaEixos();
-    glTranslatef(PosRobotX,25,0);
+    glTranslatef(PosRobotX,0,0);
     // PINHO
     if (flip)
         glRotatef(180, 0,1,0);
@@ -288,7 +288,7 @@ int  main ( int argc, char** argv )
     glutInitWindowPosition (0,0);
 
     // Define o tamanho inicial da janela grafica do programa
-    glutInitWindowSize  (650 , 500);
+    glutInitWindowSize  (800 , 500);
 
     // Cria a janela na tela, definindo o nome da
     // que aparecera na barra de título da janela.
