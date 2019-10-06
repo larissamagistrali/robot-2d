@@ -21,13 +21,12 @@ static struct timeval last_idle_time;
 #include <glut.h>
 #endif
 #include "ImageClass.h"
-//--------------------------------------------------
-float DeltaYSegC = 13.0;
-unsigned char flip = 0;
-float PosRobotX = 50;
+
 //ImageClass Image,NewImage;
+
+//-------------------CALCULA PONTO-----------------
 typedef struct{
-  GLfloat x,y,z;
+    GLfloat x,y,z;
 } Ponto;
 
 void CalculaPonto(Ponto p, Ponto &out) {
@@ -45,6 +44,8 @@ void CalculaPonto(Ponto p, Ponto &out) {
     out.y = ponto_novo[1];
     out.z = ponto_novo[2];
 }
+
+//-------------------ANIMATE--------------------
 void animate(){
     static float dt;
     static float AccumTime=0;
@@ -66,6 +67,8 @@ void animate(){
     last_idle_time = time_now;
     glutPostRedisplay();
 }
+
+//-----------------------INIT----------------------------
 void init(void){
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f); //cor de fundo
     /*
@@ -77,6 +80,8 @@ void init(void){
     NewImage.SetSize(Image.SizeX(), Image.SizeY(), Image.Channels());
     */
 }
+
+//-----------------------RESHAPE-------------------------
 void reshape( int w, int h ){
     // Reset the coordinate system before modifying
     glMatrixMode(GL_PROJECTION);
@@ -87,7 +92,10 @@ void reshape( int w, int h ){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
-//---------------------ROBO--------------------------
+//---------------------ROBO------------------------------
+float DeltaYSegC = 13.0;
+float PosRobotX = 50;
+
 void DesenhaBase(){
     glColor3f(0.5,0.1,0);
     glBegin(GL_QUADS);
@@ -97,15 +105,6 @@ void DesenhaBase(){
         glColor3f(0.5,0.1,0);
         glVertex3f(4,3,0);
         glVertex3f(4,0,0);
-    glEnd();
-}
-void DesenhaEixos(){
-    glColor3f(0,0,0);
-    glBegin(GL_LINES);
-        glVertex2d(0,25);
-        glVertex2d(100,25);
-        glVertex2d(50,0);
-        glVertex2d(50,50);
     glEnd();
 }
 void DesenhaSegmentoA(){
@@ -155,7 +154,54 @@ void DesenhaRobo(){
     DesenhaSegmentoB();
     DesenhaSegmentoC();
 }
-//--------------------------------------------------------
+//-----------------EIXOS----------------------------------
+void DesenhaEixos(){
+    glColor3f(0,0,0);
+    glBegin(GL_LINES);
+        glVertex2d(0,25);
+        glVertex2d(100,25);
+        glVertex2d(50,0);
+        glVertex2d(50,50);
+    glEnd();
+}
+//-----------------OBJETOS--------------------------------
+typedef struct {
+    float r,g,b;
+}Cor;
+
+typedef struct {
+    Cor Matriz [17][17];
+} ModeloDeObjeto ;
+
+unsigned int QtdDeModelos = 0;
+ModeloDeObjeto Modelos[50];  // Este vetor armazena todos os modelos que forem lidos do arquivos
+
+void DesenhaModelo(unsigned Mod){
+    // desenha o objeto que está descrito na posição Mod do vetor Modelos
+}
+typedef struct {
+    float tx, ty; // posicao do objeto no universo
+    int id; // nro do modelo de objeto
+} Instancia;
+
+unsigned int QtdDeObjetosNoCenario  = 0;
+Instancia ObjetosNoCenario[50]; // esta estrututra armazena cada instância que aparece na tela
+
+unsigned int InstanciaPresoNoRobo = -1; // Armazena o índice da Instancia que está presa na garra do Robo
+
+void DesenhaInstancia(Instancia I){
+    glPushMatrix();
+        glTranslatef(I.tx, I.ty,0);
+        DesenhaModelo(I.id);
+    glPopMatrix();
+}
+void DesenhaCenario(){
+    for(int i=0; i<QtdDeObjetosNoCenario; i++)
+        if (i != InstanciaPresoNoRobo)
+            DesenhaInstancia(ObjetosNoCenario[i]);
+
+}
+//------------------DISPLAY----------------------------------
 void display( void ){
     // Limpa a tela coma cor de fundo
     glClear(GL_COLOR_BUFFER_BIT);
@@ -171,13 +217,10 @@ void display( void ){
     // ---------------------------------------------------
     DesenhaEixos();
     glTranslatef(PosRobotX,0,0);
-    // PINHO
-    if (flip)
-        glRotatef(180, 0,1,0);
     DesenhaRobo();
     glutSwapBuffers();
 }
-
+//----------------COMANDOS-----------------------------------------
 void keyboard ( unsigned char key, int x, int y ){
     switch ( key ){
         case 27:          // Termina o programa qdo
@@ -185,18 +228,14 @@ void keyboard ( unsigned char key, int x, int y ){
             break;
         case 'y':
             break;
-        // PINHO
         case ' ':
-            flip = !flip;
             break;
         default:
             break;
     }
 }
-void arrow_keys ( int a_keys, int x, int y )
-{
-    switch ( a_keys )
-    {
+void arrow_keys ( int a_keys, int x, int y ){
+    switch ( a_keys )    {
         case GLUT_KEY_RIGHT:
             PosRobotX++;
             break;
@@ -222,28 +261,14 @@ int  main ( int argc, char** argv ){
     glutInit            ( &argc, argv );
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB );
     glutInitWindowPosition (0,0);
-    // Define o tamanho inicial da janela grafica do programa
     glutInitWindowSize  (800 , 500);
-    // Cria a janela na tela, definindo o nome que aparecera na barra de título da janela.
     glutCreateWindow    ( "T1-CG-Larissa-Rodrigo" );
-    // executa algumas inicializações
     init ();
-    // Define que o tratador de evento para o redesenho da tela. A funcao "display"
-    // será chamada automaticamente quando for necessário redesenhar a janela
     glutDisplayFunc ( display );
     glutIdleFunc(animate);
-    // Define que o tratador de evento para o redimensionamento da janela. A funcao "reshape"
-    // será chamada automaticamente quando o usuário alterar o tamanho da janela
     glutReshapeFunc ( reshape );
-    // Define que o tratador de evento para as teclas. A funcao "keyboard"
-    // será chamada automaticamente sempre o usuário pressionar uma tecla comum
     glutKeyboardFunc ( keyboard );
-    // Define que o tratador de evento para as teclas especiais(F1, F2,... ALT-A,
-    // ALT-B, Teclas de Seta, ...).
-    // A funcao "arrow_keys" será chamada automaticamente sempre o usuário
-    // pressionar uma tecla especial
     glutSpecialFunc ( arrow_keys );
-    // inicia o tratamento dos eventos
     glutMainLoop ( );
     return 0;
 }
