@@ -173,3 +173,40 @@
 
 1215465208 c:\users\laris\onedrive\Área de trabalho\projetos\t1-cg-20192\soil\soil.h
 
+1570408931 source:c:\robocg\t1-cg-20192\programabasicoopengl.cpp
+	<iostream>
+	<cmath>
+	<ctime>
+	<windows.h>
+	<glut.h>
+	<sys/time.h>
+	<GLUT/glut.h>
+	<glut.h>
+	"ImageClass.h"
+
+1570405424 c:\robocg\t1-cg-20192\gl\glut.h
+	"freeglut.h"
+
+1570405424 c:\robocg\t1-cg-20192\gl\freeglut.h
+	"freeglut_std.h"
+	"freeglut_ext.h"
+
+1570405424 c:\robocg\t1-cg-20192\gl\freeglut_std.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1570405424 c:\robocg\t1-cg-20192\gl\freeglut_ext.h
+
+1570405424 c:\robocg\t1-cg-20192\imageclass.h
+	<iostream>
+	<cstdlib>
+	<cstring>
+	<windows.h>
+	"gl\glut.h"
+	<GLUT/glut.h>
+	<GL/glut.h>
+	"SOIL/SOIL.h"
+
+1570405425 c:\robocg\t1-cg-20192\soil\soil.h
+

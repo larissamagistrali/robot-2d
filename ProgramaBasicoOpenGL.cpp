@@ -95,6 +95,8 @@ void reshape( int w, int h ){
 //---------------------ROBO------------------------------
 float DeltaYSegC = 13.0;
 float PosRobotX = 50;
+float RotRobotSegB = 0;
+float RotRobotSegC = 0;
 
 void DesenhaBase(){
     glColor3f(0.5,0.1,0);
@@ -109,7 +111,6 @@ void DesenhaBase(){
 }
 void DesenhaSegmentoA(){
     glTranslatef(0,3,0);
-    //glRotatef(50,0,0,1);
     glColor3f(0.5,0.2,0);
     glBegin(GL_QUADS);
         glVertex2d(-1.5,0);
@@ -122,13 +123,13 @@ void DesenhaSegmentoB(){
     Ponto p1 = {0,10,0};
     Ponto p1_new;
     glTranslatef(0,DeltaYSegC,0);
-    //glRotatef(45,0,0,1);
+    glRotatef(RotRobotSegB,0,0,1);
     glColor3f(0.5,0.3,0);
     glBegin(GL_QUADS);
-        glVertex2d(-1.5,0);
-        glVertex2d(-1.5,15);
-        glVertex2d(1.5,15);
-        glVertex2d(1.5,0);
+        glVertex2d(-1.5,-1);
+        glVertex2d(-1.5,14);
+        glVertex2d(1.5,14);
+        glVertex2d(1.5,-1);
     glEnd();
     CalculaPonto(p1, p1_new);
     cout << "(" << p1_new.x << ", " << p1_new.y << ", " << p1_new.z << ")" << endl;
@@ -137,13 +138,13 @@ void DesenhaSegmentoC(){
     Ponto p1 = {0,12,0};
     Ponto p1_new;
     glTranslatef(0,DeltaYSegC,0);
-    //glRotatef(45,0,0,1);
+    glRotatef(RotRobotSegC,0,0,1);
     glColor3f(0.5,0.1,0);
     glBegin(GL_QUADS);
-        glVertex2d(-1.5,0);
-        glVertex2d(-1.5,12);
-        glVertex2d(1.5,12);
-        glVertex2d(1.5,0);
+        glVertex2d(-1.5,-1);
+        glVertex2d(-1.5,11);
+        glVertex2d(1.5,11);
+        glVertex2d(1.5,-1);
     glEnd();
     CalculaPonto(p1, p1_new);
     cout << "(" << p1_new.x << ", " << p1_new.y << ", " << p1_new.z << ")" << endl;
@@ -226,9 +227,25 @@ void keyboard ( unsigned char key, int x, int y ){
         case 27:          // Termina o programa qdo
             exit ( 0 );   // a tecla ESC for pressionada
             break;
-        case 'y':
+        case 'q':
+            RotRobotSegC = RotRobotSegC+15;
+            if (RotRobotSegC>135)
+                RotRobotSegC = 135;
             break;
-        case ' ':
+        case 'w':
+            RotRobotSegC = RotRobotSegC-15;
+            if (RotRobotSegC<-135)
+                RotRobotSegC = -135;
+            break;
+        case 'a':
+            RotRobotSegB = RotRobotSegB+15;
+            if (RotRobotSegB>120)
+                RotRobotSegB = 120;
+            break;
+        case 's':
+            RotRobotSegB = RotRobotSegB-15;
+            if (RotRobotSegB<-120)
+                RotRobotSegB = -120;
             break;
         default:
             break;
@@ -237,20 +254,22 @@ void keyboard ( unsigned char key, int x, int y ){
 void arrow_keys ( int a_keys, int x, int y ){
     switch ( a_keys )    {
         case GLUT_KEY_RIGHT:
+            if(PosRobotX+1<=96)
             PosRobotX++;
             break;
         case GLUT_KEY_LEFT:
+            if(PosRobotX-1>=4)
             PosRobotX--;
             break;
         case GLUT_KEY_DOWN:
-            DeltaYSegC--;
+            /*DeltaYSegC--;
             if (DeltaYSegC<5)
-                DeltaYSegC = 5;
+                DeltaYSegC = 5;*/
             break;
         case GLUT_KEY_UP:
-            DeltaYSegC++;
+            /*DeltaYSegC++;
             if (DeltaYSegC>15)
-                DeltaYSegC = 15;
+                DeltaYSegC = 15;*/
             break;
         default:
             break;
