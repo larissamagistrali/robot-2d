@@ -24,6 +24,8 @@ static struct timeval last_idle_time;
 #include "ImageClass.h"
 #include "SOIL/SOIL.h"
 #include <fstream>
+
+
 //-----------------OBJETOS--------------------------------
 
 typedef struct {
@@ -31,11 +33,22 @@ typedef struct {
 }Cor;
 
 typedef struct {
-    Cor Matriz [20][20];
-} ModeloDeObjeto ;
+    Cor cores[0][0];
+}Objeto;
 
-unsigned int QtdDeModelos = 0;
-ModeloDeObjeto Modelos[50];  // Este vetor armazena todos os modelos que forem lidos do arquivos
+void LeArquivo(Objeto o, string path);
+
+Objeto Caixas[5];
+Objeto Prateleiras[3];
+Objeto Cenario[3];
+
+void DesenhaCaixas(){
+    Objeto cx0,cx1,cx2,cx3,cx4;
+    LeArquivo(cx0,"caixa1.txt");
+    Caixas[0]=cx0;
+}
+//unsigned int QtdDeModelos = 0;
+//ModeloDeObjeto Modelos[50];  // Este vetor armazena todos os modelos que forem lidos do arquivos
 /*
 void DesenhaModelo(unsigned Mod){
     // desenha o objeto que est� descrito na posi��o Mod do vetor Modelos
@@ -63,8 +76,10 @@ void DesenhaCenario(){
 
 }
 */
+
 //-------------------LEITURA DE ARQUIVO-----------------
-void LeArquivo(string path){
+
+void LeArquivo(Objeto o, string path){
     std::ifstream infile("caixa1.txt");
     int cores, i = 0;
     infile >> cores;
@@ -87,9 +102,8 @@ void LeArquivo(string path){
             Matriz[i][j] = ListaCores[c-1];
         }
     }
+    o.cores=Matriz;
 }
-//-------------------LEITURA DE ARQUIVO-----------------
-
 //-------------------CALCULA PONTO-----------------
 typedef struct{
     GLfloat x,y,z;
@@ -142,7 +156,6 @@ void init(void){
     string nome = "cenario.jpg";
     r = Image.Load(nome.c_str());
     if (!r) exit(1); // Erro na carga da imagem*/
-    LeArquivo("caixa1.txt");
 }
 
 //-----------------------RESHAPE-------------------------
@@ -175,7 +188,7 @@ void DesenhaBase(){
 }
 void DesenhaSegmentoA(){
     glTranslatef(0,3,0);
-    glColor3f(0.5,0.2,0);
+    glColor3f(0.5,0.1,0);
     glBegin(GL_QUADS);
         glVertex2d(-1.5,0);
         glVertex2d(-1.5,15);
@@ -188,7 +201,7 @@ void DesenhaSegmentoB(){
     Ponto p1_new;
     glTranslatef(0,DeltaYSegC,0);
     glRotatef(RotRobotSegB,0,0,1);
-    glColor3f(0.5,0.3,0);
+    glColor3f(0.5,0.1,0);
     glBegin(GL_QUADS);
         glVertex2d(-1.5,-1);
         glVertex2d(-1.5,14);
@@ -242,7 +255,7 @@ void display( void ){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     // ---------------------------------------------------
-    // Coloque aqui as chamadas das rotinas que desenha os objetos
+    DesenhaCaixas();
     // ---------------------------------------------------
     DesenhaEixos();
     glTranslatef(PosRobotX,0,0);
