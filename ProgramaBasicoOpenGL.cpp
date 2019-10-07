@@ -23,6 +23,72 @@ static struct timeval last_idle_time;
 #endif
 #include "ImageClass.h"
 #include "SOIL/SOIL.h"
+#include <fstream>
+//-----------------OBJETOS--------------------------------
+
+typedef struct {
+    float r,g,b;
+}Cor;
+
+typedef struct {
+    Cor Matriz [20][20];
+} ModeloDeObjeto ;
+
+unsigned int QtdDeModelos = 0;
+ModeloDeObjeto Modelos[50];  // Este vetor armazena todos os modelos que forem lidos do arquivos
+/*
+void DesenhaModelo(unsigned Mod){
+    // desenha o objeto que estï¿½ descrito na posiï¿½ï¿½o Mod do vetor Modelos
+}
+typedef struct {
+    float tx, ty; // posicao do objeto no universo
+    int id; // nro do modelo de objeto
+} Instancia;
+
+unsigned int QtdDeObjetosNoCenario  = 3;
+Instancia ObjetosNoCenario[50]; // esta estrututra armazena cada instï¿½ncia que aparece na tela
+
+unsigned int InstanciaPresoNoRobo = -1; // Armazena o ï¿½ndice da Instancia que estï¿½ presa na garra do Robo
+
+void DesenhaInstancia(Instancia I){
+    glPushMatrix();
+        glTranslatef(I.tx, I.ty,0);
+        DesenhaModelo(I.id);
+    glPopMatrix();
+}
+void DesenhaCenario(){
+    for(int i=0; i<QtdDeObjetosNoCenario; i++)
+        if (i != InstanciaPresoNoRobo)
+            DesenhaInstancia(ObjetosNoCenario[i]);
+
+}
+*/
+//-------------------LEITURA DE ARQUIVO-----------------
+void LeArquivo(string path){
+    std::ifstream infile("caixa1.txt");
+    int cores, i = 0;
+    infile >> cores;
+    cout << "Cores = " << cores << endl;
+    Cor ListaCores[cores];
+    while(i<cores){
+        Cor c;
+        infile >> i >> c.r >> c.g >> c.b;
+        cout << "Cor " << i << " " << c.r << " " << c.g << " " << c.b << endl;
+        ListaCores[i-1] = c;
+    }
+    int largura, altura, j, c = 0;
+    Cor Matriz [largura][altura];
+    infile >> largura >> altura;
+    cout << "Largura = " << largura << " Altura = " << altura << endl;
+    for(i=0; i<largura; i++){
+        for(j=0; j<altura; j++){
+            infile >> c;
+            cout << "Matriz[" << i << "][" << j << "] = Cor " << c << endl;
+            Matriz[i][j] = ListaCores[c-1];
+        }
+    }
+}
+//-------------------LEITURA DE ARQUIVO-----------------
 
 //-------------------CALCULA PONTO-----------------
 typedef struct{
@@ -76,6 +142,7 @@ void init(void){
     string nome = "cenario.jpg";
     r = Image.Load(nome.c_str());
     if (!r) exit(1); // Erro na carga da imagem*/
+    LeArquivo("caixa1.txt");
 }
 
 //-----------------------RESHAPE-------------------------
@@ -83,9 +150,9 @@ void reshape( int w, int h ){
     // Reset the coordinate system before modifying
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    // Define a area a ser ocupada pela área OpenGL dentro da Janela
+    // Define a area a ser ocupada pela ï¿½rea OpenGL dentro da Janela
     glViewport(0, 0, w, h);
-    // Define os limites lógicos da área OpenGL dentro da Janela
+    // Define os limites lï¿½gicos da ï¿½rea OpenGL dentro da Janela
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
@@ -128,8 +195,8 @@ void DesenhaSegmentoB(){
         glVertex2d(1.5,14);
         glVertex2d(1.5,-1);
     glEnd();
-    CalculaPonto(p1, p1_new);
-    cout << "(" << p1_new.x << ", " << p1_new.y << ", " << p1_new.z << ")" << endl;
+    //CalculaPonto(p1, p1_new);
+    //out << "(" << p1_new.x << ", " << p1_new.y << ", " << p1_new.z << ")" << endl;
 }
 void DesenhaSegmentoC(){
     Ponto p1 = {0,12,0};
@@ -143,8 +210,8 @@ void DesenhaSegmentoC(){
         glVertex2d(1.5,11);
         glVertex2d(1.5,-1);
     glEnd();
-    CalculaPonto(p1, p1_new);
-    cout << "(" << p1_new.x << ", " << p1_new.y << ", " << p1_new.z << ")" << endl;
+    //CalculaPonto(p1, p1_new);
+    //cout << "(" << p1_new.x << ", " << p1_new.y << ", " << p1_new.z << ")" << endl;
 }
 void DesenhaRobo(){
     DesenhaBase();
@@ -162,53 +229,15 @@ void DesenhaEixos(){
         glVertex2d(50,50);
     glEnd();
 }
-//-----------------OBJETOS--------------------------------
-/*
-typedef struct {
-    float r,g,b;
-}Cor;
 
-typedef struct {
-    Cor Matriz [17][17];
-} ModeloDeObjeto ;
-
-unsigned int QtdDeModelos = 0;
-ModeloDeObjeto Modelos[50];  // Este vetor armazena todos os modelos que forem lidos do arquivos
-
-void DesenhaModelo(unsigned Mod){
-    // desenha o objeto que está descrito na posição Mod do vetor Modelos
-}
-typedef struct {
-    float tx, ty; // posicao do objeto no universo
-    int id; // nro do modelo de objeto
-} Instancia;
-
-unsigned int QtdDeObjetosNoCenario  = 3;
-Instancia ObjetosNoCenario[50]; // esta estrututra armazena cada instância que aparece na tela
-
-unsigned int InstanciaPresoNoRobo = -1; // Armazena o índice da Instancia que está presa na garra do Robo
-
-void DesenhaInstancia(Instancia I){
-    glPushMatrix();
-        glTranslatef(I.tx, I.ty,0);
-        DesenhaModelo(I.id);
-    glPopMatrix();
-}
-void DesenhaCenario(){
-    for(int i=0; i<QtdDeObjetosNoCenario; i++)
-        if (i != InstanciaPresoNoRobo)
-            DesenhaInstancia(ObjetosNoCenario[i]);
-
-}
-*/
 //------------------DISPLAY----------------------------------
 void display( void ){
     // Limpa a tela coma cor de fundo
     glClear(GL_COLOR_BUFFER_BIT);
-    // Define os limites lógicos da área OpenGL dentro da Janela
+    // Define os limites lï¿½gicos da ï¿½rea OpenGL dentro da Janela
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    // Define os limites lógicos da área OpenGL dentro da Janela
+    // Define os limites lï¿½gicos da ï¿½rea OpenGL dentro da Janela
     glOrtho(0,100,0,50,-1,1);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

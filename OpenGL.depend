@@ -212,3 +212,43 @@
 
 1570405425 c:\robocg\t1-cg-20192\soil\soil.h
 
+1570457617 source:c:\users\17204071\desktop\cg\t1-cg-20192\programabasicoopengl.cpp
+	<iostream>
+	<cmath>
+	<cstdlib>
+	<ctime>
+	<windows.h>
+	<glut.h>
+	<sys/time.h>
+	<GLUT/glut.h>
+	<glut.h>
+	"ImageClass.h"
+	"SOIL/SOIL.h"
+	<fstream>
+
+1570453893 c:\users\17204071\desktop\cg\t1-cg-20192\gl\glut.h
+	"freeglut.h"
+
+1570453893 c:\users\17204071\desktop\cg\t1-cg-20192\gl\freeglut.h
+	"freeglut_std.h"
+	"freeglut_ext.h"
+
+1570453893 c:\users\17204071\desktop\cg\t1-cg-20192\gl\freeglut_std.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1570453893 c:\users\17204071\desktop\cg\t1-cg-20192\gl\freeglut_ext.h
+
+1570453893 c:\users\17204071\desktop\cg\t1-cg-20192\imageclass.h
+	<iostream>
+	<cstdlib>
+	<cstring>
+	<windows.h>
+	"gl\glut.h"
+	<GLUT/glut.h>
+	<GL/glut.h>
+	"SOIL/SOIL.h"
+
+1570453894 c:\users\17204071\desktop\cg\t1-cg-20192\soil\soil.h
+
