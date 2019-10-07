@@ -136,7 +136,7 @@
 
 1570109829 c:\users\17204071\desktop\t1-cg-20192\gl\freeglut_ext.h
 
-1570387404 source:c:\users\laris\onedrive\Área de trabalho\projetos\t1-cg-20192\programabasicoopengl.cpp
+1570397720 source:c:\users\laris\onedrive\Área de trabalho\projetos\t1-cg-20192\programabasicoopengl.cpp
 	<iostream>
 	<cmath>
 	<ctime>
@@ -173,9 +173,10 @@
 
 1215465208 c:\users\laris\onedrive\Área de trabalho\projetos\t1-cg-20192\soil\soil.h
 
-1570408931 source:c:\robocg\t1-cg-20192\programabasicoopengl.cpp
+1570410938 source:c:\robocg\t1-cg-20192\programabasicoopengl.cpp
 	<iostream>
 	<cmath>
+	<cstdlib>
 	<ctime>
 	<windows.h>
 	<glut.h>
@@ -183,6 +184,7 @@
 	<GLUT/glut.h>
 	<glut.h>
 	"ImageClass.h"
+	"SOIL/SOIL.h"
 
 1570405424 c:\robocg\t1-cg-20192\gl\glut.h
 	"freeglut.h"

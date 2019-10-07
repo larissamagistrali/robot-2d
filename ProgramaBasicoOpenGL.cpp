@@ -4,6 +4,7 @@
 //-------------------------------------
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
 #include <ctime>
 using namespace std;
 #ifdef WIN32
@@ -21,8 +22,7 @@ static struct timeval last_idle_time;
 #include <glut.h>
 #endif
 #include "ImageClass.h"
-
-//ImageClass Image,NewImage;
+#include "SOIL/SOIL.h"
 
 //-------------------CALCULA PONTO-----------------
 typedef struct{
@@ -69,16 +69,13 @@ void animate(){
 }
 
 //-----------------------INIT----------------------------
+//ImageClass Image;
 void init(void){
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f); //cor de fundo
-    /*
-    int r;
-    string nome="cenario.jpg";
-    r = Image.Load(nome.c_str()); // Carrega uma imagem
-    if (!r) exit(1);
-    else cout << ("img ok\n");
-    NewImage.SetSize(Image.SizeX(), Image.SizeY(), Image.Channels());
-    */
+    /*int r;
+    string nome = "cenario.jpg";
+    r = Image.Load(nome.c_str());
+    if (!r) exit(1); // Erro na carga da imagem*/
 }
 
 //-----------------------RESHAPE-------------------------
@@ -166,6 +163,7 @@ void DesenhaEixos(){
     glEnd();
 }
 //-----------------OBJETOS--------------------------------
+/*
 typedef struct {
     float r,g,b;
 }Cor;
@@ -185,7 +183,7 @@ typedef struct {
     int id; // nro do modelo de objeto
 } Instancia;
 
-unsigned int QtdDeObjetosNoCenario  = 0;
+unsigned int QtdDeObjetosNoCenario  = 3;
 Instancia ObjetosNoCenario[50]; // esta estrututra armazena cada instância que aparece na tela
 
 unsigned int InstanciaPresoNoRobo = -1; // Armazena o índice da Instancia que está presa na garra do Robo
@@ -202,6 +200,7 @@ void DesenhaCenario(){
             DesenhaInstancia(ObjetosNoCenario[i]);
 
 }
+*/
 //------------------DISPLAY----------------------------------
 void display( void ){
     // Limpa a tela coma cor de fundo
@@ -256,7 +255,7 @@ void arrow_keys ( int a_keys, int x, int y ){
         case GLUT_KEY_RIGHT:
             if(PosRobotX+1<=96)
             PosRobotX++;
-            break;
+            break;//
         case GLUT_KEY_LEFT:
             if(PosRobotX-1>=4)
             PosRobotX--;
