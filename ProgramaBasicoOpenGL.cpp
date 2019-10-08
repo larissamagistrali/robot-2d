@@ -26,12 +26,12 @@ static struct timeval last_idle_time;
 #include <fstream>
 #include <dirent.h>
 #include <string>
-
+float gravidade = 0.15, friccao = 0.1;
 //-----------------OBJETOS--------------------------------
 
 typedef struct
 {
-    float r, g, b;
+    float r, g, b, alpha;
 } Cor;
 
 typedef struct
@@ -46,6 +46,8 @@ ModeloDeObjeto Modelos[50]; // Este vetor armazena todos os modelos que forem li
 
 void DesenhaModelo(unsigned Mod)
 {
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
     int i, j;
     ModeloDeObjeto mdo = Modelos[Mod];
     float dx = -mdo.largura / 4., dy = mdo.altura / 2. - 0.5;
@@ -55,7 +57,7 @@ void DesenhaModelo(unsigned Mod)
         for (j = 0; j < mdo.altura; j++)
         {
             glBegin(GL_QUADS);
-            glColor3ub(mdo.cores[i][j].r, mdo.cores[i][j].g, mdo.cores[i][j].b);
+            glColor4ub(mdo.cores[i][j].r, mdo.cores[i][j].g, mdo.cores[i][j].b, mdo.cores[i][j].alpha);
             glVertex3f(dx, dy, 0);
             glVertex3f(dx + 0.5, dy, 0);
             glVertex3f(dx + 0.5, dy + 0.5, 0);
@@ -67,20 +69,39 @@ void DesenhaModelo(unsigned Mod)
         dy -= 0.5;
         dx = -mdo.largura / 4.;
     }
+    glDisable(GL_BLEND);
 }
 typedef struct
 {
     float tx, ty; // posicao do objeto no universo
     int id;       // nro do modelo de objeto
     bool movel;   // robo pode pegar
+    float dy = 0.5;
 } Instancia;
 unsigned int QtdDeObjetosNoCenario = 0;
 Instancia ObjetosNoCenario[50]; // esta estrututra armazena cada inst�ncia que aparece na tela
 
 int InstanciaPresoNoRobo = -1; // Armazena o �ndice da Instancia que est� presa na garra do Robo
 
-void DesenhaInstancia(Instancia I)
+void DesenhaInstancia(Instancia &I, int instId)
 {
+    if (I.movel && instId != InstanciaPresoNoRobo)
+    {
+        cout << "movel" << endl;
+        if (I.ty <= 0)
+        {
+            cout << "friccao" << endl;
+            I.dy = -I.dy * friccao;
+        }
+        else
+        {
+            cout << "gravidade" << endl;
+            I.dy = gravidade + I.dy;
+        }
+        I.ty = I.ty - I.dy;
+        if (I.ty < 0)
+            I.ty = 0;
+    }
     glPushMatrix();
     glTranslatef(I.tx, I.ty, 0);
     DesenhaModelo(I.id);
@@ -95,8 +116,7 @@ void DesenhaInstancia(Instancia I)
 void DesenhaCenario()
 {
     for (int i = 0; i < QtdDeObjetosNoCenario; i++)
-        //if (i != InstanciaPresoNoRobo)
-        DesenhaInstancia(ObjetosNoCenario[i]);
+        DesenhaInstancia(ObjetosNoCenario[i], i);
 }
 
 //-------------------LEITURA DE ARQUIVO-----------------
@@ -130,11 +150,6 @@ void LeArquivoCenario(string path)
 void LeArquivoModelo(ModeloDeObjeto &mod, const char *path)
 {
     std::ifstream infile(path);
-    if (infile.fail()) //is it ok?
-    {
-        cout << "Input file did not open please check it\n";
-        system("pause");
-    }
     int cores, i = 0;
     infile >> cores;
     cout << "Cores = " << cores << endl;
@@ -142,8 +157,8 @@ void LeArquivoModelo(ModeloDeObjeto &mod, const char *path)
     while (i < cores)
     {
         Cor c;
-        infile >> i >> c.r >> c.g >> c.b;
-        cout << "Cor " << i << " " << c.r << " " << c.g << " " << c.b << endl;
+        infile >> i >> c.r >> c.g >> c.b >> c.alpha;
+        cout << "Cor " << i << " " << c.r << " " << c.g << " " << c.b << " " << c.alpha << endl;
         ListaCores[i - 1] = c;
     }
     int largura, altura, j, c = 0;
