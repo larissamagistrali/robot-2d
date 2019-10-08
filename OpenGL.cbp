@@ -78,7 +78,14 @@
 			<Add option="-Wno-narrowing" />
 			<Add option="-Wno-deprecated-declarations" />
 		</Compiler>
-		<Unit filename="ProgramaBasicoOpenGL.cpp" />
+		<Unit filename="ProgramaBasicoOpenGL.cpp" />		
+		<Unit filename="ImageClass.cpp" />
+		<Unit filename="ImageClass.h" />
+		<Unit filename="SOIL/SOIL.cpp" />
+		<Unit filename="SOIL/image_DXT.cpp" />
+		<Unit filename="SOIL/image_helper.cpp" />
+		<Unit filename="SOIL/stb_image_aug.cpp" />
+		<Unit filename="TextureClass.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

@@ -215,7 +215,7 @@
 
 1570405425 c:\robocg\t1-cg-20192\soil\soil.h
 
-1570457617 source:c:\users\17204071\desktop\cg\t1-cg-20192\programabasicoopengl.cpp
+1570539497 source:c:\users\17204071\desktop\cg\t1-cg-20192\programabasicoopengl.cpp
 	<iostream>
 	<cmath>
 	<cstdlib>
@@ -228,6 +228,8 @@
 	"ImageClass.h"
 	"SOIL/SOIL.h"
 	<fstream>
+	<dirent.h>
+	<string>
 
 1570453893 c:\users\17204071\desktop\cg\t1-cg-20192\gl\glut.h
 	"freeglut.h"
@@ -243,7 +245,7 @@
 
 1570453893 c:\users\17204071\desktop\cg\t1-cg-20192\gl\freeglut_ext.h
 
-1570453893 c:\users\17204071\desktop\cg\t1-cg-20192\imageclass.h
+1505150884 c:\users\17204071\desktop\cg\t1-cg-20192\imageclass.h
 	<iostream>
 	<cstdlib>
 	<cstring>
@@ -253,7 +255,7 @@
 	<GL/glut.h>
 	"SOIL/SOIL.h"
 
-1570453894 c:\users\17204071\desktop\cg\t1-cg-20192\soil\soil.h
+1215465208 c:\users\17204071\desktop\cg\t1-cg-20192\soil\soil.h
 
 1570473366 source:c:\users\17111233\documents\t1-cg-20192\programabasicoopengl.cpp
 	<iostream>
@@ -294,4 +296,65 @@
 	"SOIL/SOIL.h"
 
 1570473366 c:\users\17111233\documents\t1-cg-20192\soil\soil.h
+
+1570453893 source:c:\users\17204071\desktop\cg\t1-cg-20192\imageclass.cpp
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<windows.h>
+	"gl\glut.h"
+	<GLUT/glut.h>
+	"ImageClass.h"
+
+1215465208 source:c:\users\17204071\desktop\cg\t1-cg-20192\soil\image_dxt.cpp
+	"image_DXT.h"
+	<math.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+
+1215465208 c:\users\17204071\desktop\cg\t1-cg-20192\soil\image_dxt.h
+
+1215465208 source:c:\users\17204071\desktop\cg\t1-cg-20192\soil\image_helper.cpp
+	"image_helper.h"
+	<stdlib.h>
+	<math.h>
+
+1215465208 c:\users\17204071\desktop\cg\t1-cg-20192\soil\image_helper.h
+
+1425993830 source:c:\users\17204071\desktop\cg\t1-cg-20192\soil\soil.cpp
+	<windows.h>
+	<wingdi.h>
+	<GL/gl.h>
+	<OpenGL/gl.h>
+	<Carbon/Carbon.h>
+	<GL/gl.h>
+	<GL/glx.h>
+	"SOIL.h"
+	"stb_image_aug.h"
+	"image_helper.h"
+	"image_DXT.h"
+	<stdlib.h>
+	<string.h>
+	<iostream>
+
+1215465208 c:\users\17204071\desktop\cg\t1-cg-20192\soil\stb_image_aug.h
+	<stdio.h>
+
+1425995044 source:c:\users\17204071\desktop\cg\t1-cg-20192\soil\stb_image_aug.cpp
+	"stb_image_aug.h"
+	<math.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<memory.h>
+	<assert.h>
+	<stdarg.h>
+	"stbi_DDS_aug.h"
+	"stbi_DDS_aug_c.h"
+
+1215465208 c:\users\17204071\desktop\cg\t1-cg-20192\soil\stbi_dds_aug.h
+
+1215465208 c:\users\17204071\desktop\cg\t1-cg-20192\soil\stbi_dds_aug_c.h
 

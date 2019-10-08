@@ -26,7 +26,8 @@ static struct timeval last_idle_time;
 #include <fstream>
 #include <dirent.h>
 #include <string>
-float gravidade = 0.15, friccao = 0.1;
+float gravidade = 0.1, friccao = 0.05, dt=1;
+bool Colide(float x, float y, float dx, float dy, int id);
 //-----------------OBJETOS--------------------------------
 
 typedef struct
@@ -52,9 +53,9 @@ void DesenhaModelo(unsigned Mod)
     ModeloDeObjeto mdo = Modelos[Mod];
     float dx = -mdo.largura / 4., dy = mdo.altura / 2. - 0.5;
     //cout << "Quad " << Mod << " " << mdo.largura << " " << mdo.altura << endl;
-    for (i = 0; i < mdo.largura; i++)
+    for (i = 0; i < mdo.altura; i++)
     {
-        for (j = 0; j < mdo.altura; j++)
+        for (j = 0; j < mdo.largura; j++)
         {
             glBegin(GL_QUADS);
             glColor4ub(mdo.cores[i][j].r, mdo.cores[i][j].g, mdo.cores[i][j].b, mdo.cores[i][j].alpha);
@@ -87,31 +88,32 @@ void DesenhaInstancia(Instancia &I, int instId)
 {
     if (I.movel && instId != InstanciaPresoNoRobo)
     {
-        cout << "movel" << endl;
-        if (I.ty <= 0)
+        if (I.ty <= 6)
         {
-            cout << "friccao" << endl;
-            I.dy = -I.dy * friccao;
+            I.dy = -I.dy * friccao * dt;
         }
         else
         {
-            cout << "gravidade" << endl;
-            I.dy = gravidade + I.dy;
+            I.dy = gravidade + I.dy * dt;
         }
-        I.ty = I.ty - I.dy;
-        if (I.ty < 0)
-            I.ty = 0;
+        if(!Colide(I.tx, I.ty, 0, -I.dy, instId))
+        {
+          I.ty = I.ty - I.dy;
+        }
+        if (I.ty < 6)
+          I.ty = 6;
+
     }
     glPushMatrix();
     glTranslatef(I.tx, I.ty, 0);
     DesenhaModelo(I.id);
     glPopMatrix();
-    glPointSize(5);
+    /*glPointSize(5);
     glColor3f(1, 0, 0);
     glBegin(GL_POINTS);
     glVertex2d(I.tx, I.ty);
     glEnd();
-    glPointSize(1);
+    glPointSize(1);*/
 }
 void DesenhaCenario()
 {
@@ -145,6 +147,7 @@ void LeArquivoCenario(string path)
         ObjetosNoCenario[QtdDeObjetosNoCenario++] = inst;
         i++;
     }
+    infile.close();
 }
 
 void LeArquivoModelo(ModeloDeObjeto &mod, const char *path)
@@ -165,20 +168,20 @@ void LeArquivoModelo(ModeloDeObjeto &mod, const char *path)
     infile >> largura >> altura;
     mod.altura = altura;
     mod.largura = largura;
-    Cor Matriz[largura][altura] = {};
+    Cor Matriz[altura][largura] = {};
     cout << "Largura = " << largura << " Altura = " << altura << endl;
-    for (i = 0; i < largura; i++)
+    for (i = 0; i < altura; i++)
     {
-        for (j = 0; j < altura; j++)
+        for (j = 0; j < largura; j++)
         {
             infile >> c;
             cout << "Matriz[" << i << "][" << j << "] = Cor " << c << endl;
             Matriz[i][j] = ListaCores[c - 1];
         }
     }
-    for (i = 0; i < largura; i++)
+    for (i = 0; i < altura; i++)
     {
-        for (j = 0; j < altura; j++)
+        for (j = 0; j < largura; j++)
         {
             mod.cores[i][j] = Matriz[i][j];
         }
@@ -203,6 +206,7 @@ void CarregaCenario()
             strcpy(filePath, "./objetos/");
             strcat(filePath, lsdir->d_name);
             LeArquivoModelo(mod, filePath);
+            cout << "[" << QtdDeModelos << "] " << filePath << " carregado." << endl;
             Modelos[QtdDeModelos++] = mod;
         }
     }
@@ -235,9 +239,9 @@ void CalculaPonto(Ponto p, Ponto &out)
 }
 
 //-------------------ANIMATE--------------------
+
 void animate()
 {
-    static float dt;
     static float AccumTime = 0;
 #ifdef _WIN32
     DWORD time_now;
@@ -260,11 +264,11 @@ void animate()
 }
 
 //-----------------------INIT----------------------------
-//ImageClass Image;
+ImageClass Image;
 void init(void)
 {
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f); //cor de fundo
-    /*int r;
+    int r;
     string nome = "cenario.jpg";
     r = Image.Load(nome.c_str());
     if (!r) exit(1); // Erro na carga da imagem*/
@@ -288,7 +292,7 @@ float DeltaYSegC = 13.0;
 float PosRobotX = 50;
 float RotRobotSegB = 0;
 float RotRobotSegC = 0;
-bool espacoPressionado = true;
+bool espacoPressionado = false;
 
 void DesenhaBase()
 {
@@ -315,8 +319,6 @@ void DesenhaSegmentoA()
 }
 void DesenhaSegmentoB()
 {
-    Ponto p1 = {0, 10, 0};
-    Ponto p1_new;
     glTranslatef(0, DeltaYSegC, 0);
     glRotatef(RotRobotSegB, 0, 0, 1);
     glColor3f(0.5, 0.1, 0);
@@ -326,13 +328,9 @@ void DesenhaSegmentoB()
     glVertex2d(1.5, 14);
     glVertex2d(1.5, -1);
     glEnd();
-    //CalculaPonto(p1, p1_new);
-    //out << "(" << p1_new.x << ", " << p1_new.y << ", " << p1_new.z << ")" << endl;
 }
 void DesenhaSegmentoC()
 {
-    Ponto p1 = {0, 12, 0};
-    Ponto p1_new;
     glTranslatef(0, DeltaYSegC, 0);
     glRotatef(RotRobotSegC, 0, 0, 1);
     glColor3f(0.5, 0.1, 0);
@@ -342,12 +340,31 @@ void DesenhaSegmentoC()
     glVertex2d(1.5, 11);
     glVertex2d(1.5, -1);
     glEnd();
-    //CalculaPonto(p1, p1_new);
-    //cout << "(" << p1_new.x << ", " << p1_new.y << ", " << p1_new.z << ")" << endl;
 }
+
+bool Colide(float x, float y, float dx, float dy, int id)
+{
+    for (int i = 0; i < QtdDeObjetosNoCenario; i++)
+    {
+        if(i==id) continue;
+        float a = (ObjetosNoCenario[i].tx - Modelos[ObjetosNoCenario[i].id].largura / 2.);
+        float b = (ObjetosNoCenario[i].tx + Modelos[ObjetosNoCenario[i].id].largura / 2.);
+        float c = (ObjetosNoCenario[i].ty - Modelos[ObjetosNoCenario[i].id].altura / 2.);
+        float d = (ObjetosNoCenario[i].ty + Modelos[ObjetosNoCenario[i].id].altura / 2.);
+
+        //cout << x << " " << dx << " " << y << " " << dy << " " << a << " " << b << " " << c << " " << d << endl;
+        if (x + dx > 100 || x + dx < 6 || ((a <= x + dx - 0.5*dx
+               && x + dx - 0.5*dx <= b) && (c <= y+dy && y+dy <= d)))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void DesenhaRobo()
 {
-    glTranslatef(PosRobotX, 0, 0);
+    glTranslatef(PosRobotX, 6, 0);
     DesenhaBase();
     DesenhaSegmentoA();
     DesenhaSegmentoB();
@@ -357,12 +374,12 @@ void DesenhaRobo()
     Ponto pg = {0, 11, 0};
     Ponto pg_new;
     CalculaPonto(pg, pg_new);
-    glPointSize(5);
+    /*glPointSize(5);
     glColor3f(1, 0, 0);
     glBegin(GL_POINTS);
     glVertex2d(0, 11);
     glEnd();
-    glPointSize(1);
+    glPointSize(1);*/
 
     if (espacoPressionado)
     {
@@ -377,7 +394,8 @@ void DesenhaRobo()
                 float b = (ObjetosNoCenario[i].tx + Modelos[ObjetosNoCenario[i].id].largura / 2.);
                 float c = (ObjetosNoCenario[i].ty - Modelos[ObjetosNoCenario[i].id].altura / 2.);
                 float d = (ObjetosNoCenario[i].ty + Modelos[ObjetosNoCenario[i].id].altura / 2.);
-                if ((a <= pg_new.x && pg_new.x <= b) && (c <= pg_new.y && pg_new.y <= d))
+                if ((a <= pg_new.x && pg_new.x <= b) && (c <= pg_new.y && pg_new.y <= d)
+                    && !Colide(ObjetosNoCenario[i].tx, ObjetosNoCenario[i].ty, 0, 1,i))
                 {
                     cout << "pega caixa" << endl;
                     InstanciaPresoNoRobo = i;
@@ -387,8 +405,13 @@ void DesenhaRobo()
         }
         else // Há caixas na garra, soltar
         {
-            cout << "solta caixa" << endl;
-            InstanciaPresoNoRobo = -1;
+            if(pg_new.x>=6 && pg_new.x<=100
+               && !Colide(ObjetosNoCenario[InstanciaPresoNoRobo].tx,
+                          ObjetosNoCenario[InstanciaPresoNoRobo].ty, 0, 0, InstanciaPresoNoRobo))
+            {
+                cout << "solta caixa" << endl;
+                InstanciaPresoNoRobo = -1;
+            }
         }
     }
     if (InstanciaPresoNoRobo != -1)
@@ -423,8 +446,14 @@ void display(void)
     glOrtho(0, 100, 0, 50, -1, 1);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    float zoomH = (glutGet(GLUT_WINDOW_WIDTH))/(double)Image.SizeX();
+    float zoomV = (glutGet(GLUT_WINDOW_HEIGHT))/(double)Image.SizeY();
+    Image.SetZoomH(zoomH);
+    Image.SetZoomV(zoomV);
+    Image.SetPos(0, 0);
+    Image.Display();
     DesenhaCenario();
-    DesenhaEixos();
+    //DesenhaEixos();
     DesenhaRobo();
     glutSwapBuffers();
 }
@@ -467,11 +496,11 @@ void arrow_keys(int a_keys, int x, int y)
     switch (a_keys)
     {
     case GLUT_KEY_RIGHT:
-        if (PosRobotX + 1 <= 96)
+        if (!Colide(PosRobotX, 3, 1, 0, -1))
             PosRobotX++;
-        break; //
+        break;
     case GLUT_KEY_LEFT:
-        if (PosRobotX - 1 >= 4)
+        if (!Colide(PosRobotX, 3, -1, 0, -1))
             PosRobotX--;
         break;
     default:
