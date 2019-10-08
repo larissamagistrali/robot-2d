@@ -173,7 +173,7 @@
 
 1215465208 c:\users\laris\onedrive\Área de trabalho\projetos\t1-cg-20192\soil\soil.h
 
-1570410938 source:c:\robocg\t1-cg-20192\programabasicoopengl.cpp
+1570506813 source:c:\robocg\t1-cg-20192\programabasicoopengl.cpp
 	<iostream>
 	<cmath>
 	<cstdlib>
@@ -185,6 +185,7 @@
 	<glut.h>
 	"ImageClass.h"
 	"SOIL/SOIL.h"
+	<fstream>
 
 1570405424 c:\robocg\t1-cg-20192\gl\glut.h
 	"freeglut.h"
