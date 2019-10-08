@@ -85,7 +85,6 @@ void DesenhaInstancia(Instancia I)
     glTranslatef(I.tx, I.ty, 0);
     DesenhaModelo(I.id);
     glPopMatrix();
-
     glPointSize(5);
     glColor3f(1, 0, 0);
     glBegin(GL_POINTS);
@@ -96,8 +95,8 @@ void DesenhaInstancia(Instancia I)
 void DesenhaCenario()
 {
     for (int i = 0; i < QtdDeObjetosNoCenario; i++)
-        if (i != InstanciaPresoNoRobo)
-            DesenhaInstancia(ObjetosNoCenario[i]);
+        //if (i != InstanciaPresoNoRobo)
+        DesenhaInstancia(ObjetosNoCenario[i]);
 }
 
 //-------------------LEITURA DE ARQUIVO-----------------
@@ -274,6 +273,7 @@ float DeltaYSegC = 13.0;
 float PosRobotX = 50;
 float RotRobotSegB = 0;
 float RotRobotSegC = 0;
+bool espacoPressionado = true;
 
 void DesenhaBase()
 {
@@ -337,6 +337,52 @@ void DesenhaRobo()
     DesenhaSegmentoA();
     DesenhaSegmentoB();
     DesenhaSegmentoC();
+
+    // Ponto da garra no S.R.O.: (0,11)
+    Ponto pg = {0, 11, 0};
+    Ponto pg_new;
+    CalculaPonto(pg, pg_new);
+    glPointSize(5);
+    glColor3f(1, 0, 0);
+    glBegin(GL_POINTS);
+    glVertex2d(0, 11);
+    glEnd();
+    glPointSize(1);
+
+    if (espacoPressionado)
+    {
+        cout << "espaco" << endl;
+        if (InstanciaPresoNoRobo == -1) // Não há caixas na garra, tentar pegar uma
+        {
+            for (int i = 0; i < QtdDeObjetosNoCenario; i++)
+            {
+                if (!ObjetosNoCenario[i].movel)
+                    continue;
+                float a = (ObjetosNoCenario[i].tx - Modelos[ObjetosNoCenario[i].id].largura / 2.);
+                float b = (ObjetosNoCenario[i].tx + Modelos[ObjetosNoCenario[i].id].largura / 2.);
+                float c = (ObjetosNoCenario[i].ty - Modelos[ObjetosNoCenario[i].id].altura / 2.);
+                float d = (ObjetosNoCenario[i].ty + Modelos[ObjetosNoCenario[i].id].altura / 2.);
+                if ((a <= pg_new.x && pg_new.x <= b) && (c <= pg_new.y && pg_new.y <= d))
+                {
+                    cout << "pega caixa" << endl;
+                    InstanciaPresoNoRobo = i;
+                    break;
+                }
+            }
+        }
+        else // Há caixas na garra, soltar
+        {
+            cout << "solta caixa" << endl;
+            InstanciaPresoNoRobo = -1;
+        }
+    }
+    if (InstanciaPresoNoRobo != -1)
+    {
+        ObjetosNoCenario[InstanciaPresoNoRobo].tx = pg_new.x;
+        ObjetosNoCenario[InstanciaPresoNoRobo].ty = pg_new.y;
+    }
+
+    espacoPressionado = false;
 }
 //-----------------EIXOS----------------------------------
 void DesenhaEixos()
@@ -395,6 +441,8 @@ void keyboard(unsigned char key, int x, int y)
         if (RotRobotSegB < -120)
             RotRobotSegB = -120;
         break;
+    case ' ':
+        espacoPressionado = true;
     default:
         break;
     }
