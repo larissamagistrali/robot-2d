@@ -24,6 +24,8 @@ static struct timeval last_idle_time;
 #include "ImageClass.h"
 #include "SOIL/SOIL.h"
 #include <fstream>
+#include <dirent.h>
+#include <string>
 
 //-----------------OBJETOS--------------------------------
 
@@ -36,7 +38,7 @@ typedef struct
 {
     int altura;
     int largura;
-    Cor cores[20][20];
+    Cor cores[100][100];
 } ModeloDeObjeto;
 
 unsigned int QtdDeModelos = 0;
@@ -126,9 +128,14 @@ void LeArquivoCenario(string path)
     }
 }
 
-void LeArquivoModelo(ModeloDeObjeto &mod, string path)
+void LeArquivoModelo(ModeloDeObjeto &mod, const char *path)
 {
-    std::ifstream infile(path.c_str());
+    std::ifstream infile(path);
+    if (infile.fail()) //is it ok?
+    {
+        cout << "Input file did not open please check it\n";
+        system("pause");
+    }
     int cores, i = 0;
     infile >> cores;
     cout << "Cores = " << cores << endl;
@@ -162,15 +169,30 @@ void LeArquivoModelo(ModeloDeObjeto &mod, string path)
             mod.cores[i][j] = Matriz[i][j];
         }
     }
+    infile.close();
 }
 
 void CarregaCenario()
 {
-    //for each file in caixas directory
-    ModeloDeObjeto mod;
-    LeArquivoModelo(mod, "caixa1.txt");
-    Modelos[QtdDeModelos++] = mod;
-    //}
+    DIR *dir;
+    struct dirent *lsdir;
+    char path[15];
+    strcpy(path, "./objetos/");
+    dir = opendir(path);
+    while ((lsdir = readdir(dir)) != NULL)
+    {
+        char *dot = strrchr(lsdir->d_name, '.');
+        if (dot && !strcmp(dot, ".txt"))
+        {
+            ModeloDeObjeto mod;
+            char filePath[50];
+            strcpy(filePath, "./objetos/");
+            strcat(filePath, lsdir->d_name);
+            LeArquivoModelo(mod, filePath);
+            Modelos[QtdDeModelos++] = mod;
+        }
+    }
+    closedir(dir);
     LeArquivoCenario("cenario.txt");
 }
 
