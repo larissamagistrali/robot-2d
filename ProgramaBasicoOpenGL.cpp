@@ -45,8 +45,9 @@ ModeloDeObjeto Modelos[50]; // Este vetor armazena todos os modelos que forem li
 void DesenhaModelo(unsigned Mod)
 {
     int i, j;
-    float dx = 0, dy = 0;
     ModeloDeObjeto mdo = Modelos[Mod];
+    float dx = -mdo.largura / 4., dy = mdo.altura / 2. - 0.5;
+    //cout << "Quad " << Mod << " " << mdo.largura << " " << mdo.altura << endl;
     for (i = 0; i < mdo.largura; i++)
     {
         for (j = 0; j < mdo.altura; j++)
@@ -58,11 +59,11 @@ void DesenhaModelo(unsigned Mod)
             glVertex3f(dx + 0.5, dy + 0.5, 0);
             glVertex3f(dx, dy + 0.5, 0);
             glEnd();
-            //cout << "Quad " << i << " " << j << " " << mdo.cores[i][j].r << " " << mdo.cores[i][j].g << " " << mdo.cores[i][j].b << " " << dx << " " << dy << endl;
+            //cout << "Quad " << Mod << " " << i << " " << j << " " << mdo.cores[i][j].r << " " << mdo.cores[i][j].g << " " << mdo.cores[i][j].b << " " << dx << " " << dy << endl;
             dx += 0.5;
         }
         dy -= 0.5;
-        dx = 0;
+        dx = -mdo.largura / 4.;
     }
 }
 typedef struct
@@ -74,7 +75,7 @@ typedef struct
 unsigned int QtdDeObjetosNoCenario = 0;
 Instancia ObjetosNoCenario[50]; // esta estrututra armazena cada inst�ncia que aparece na tela
 
-unsigned int InstanciaPresoNoRobo = -1; // Armazena o �ndice da Instancia que est� presa na garra do Robo
+int InstanciaPresoNoRobo = -1; // Armazena o �ndice da Instancia que est� presa na garra do Robo
 
 void DesenhaInstancia(Instancia I)
 {
@@ -82,6 +83,13 @@ void DesenhaInstancia(Instancia I)
     glTranslatef(I.tx, I.ty, 0);
     DesenhaModelo(I.id);
     glPopMatrix();
+
+    glPointSize(5);
+    glColor3f(1, 0, 0);
+    glBegin(GL_POINTS);
+    glVertex2d(I.tx, I.ty);
+    glEnd();
+    glPointSize(1);
 }
 void DesenhaCenario()
 {
@@ -103,18 +111,17 @@ void LeArquivoCenario(string path)
     std::ifstream infile(path.c_str());
     int instancias, i = 0;
     infile >> instancias;
-    QtdDeObjetosNoCenario = instancias;
     while (i < instancias)
     {
         int idMod, x, y, p;
         infile >> idMod >> x >> y >> p;
         cout << "Instância " << i << " " << idMod << " " << x << " " << y << " " << p << endl;
         Instancia inst;
-        inst.id = i;
+        inst.id = idMod;
         inst.tx = x;
         inst.ty = y;
         inst.movel = p == 1;
-        ObjetosNoCenario[i] = inst;
+        ObjetosNoCenario[QtdDeObjetosNoCenario++] = inst;
         i++;
     }
 }
